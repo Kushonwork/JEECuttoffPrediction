@@ -6,8 +6,8 @@ import html5lib
 from selenium.webdriver.common.keys import Keys
 import time
 import csv
-driver=webdriver.Chrome(executable_path=r'D:/Obfuscation/JEECutoffPredictor/chromedriver.exe')
-url='https://josaa.nic.in/Result/Result/OpeningClosingRankArchieve.aspx'
+driver=webdriver.Chrome()
+url='https://rankmatrix.iitr.ac.in/rank'
 
 class user:
     def __init__(self,name,rank_adv,rank_mains):
