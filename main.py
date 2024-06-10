@@ -6,7 +6,7 @@ import html5lib
 from selenium.webdriver.common.keys import Keys
 import time
 import csv
-driver=webdriver.Chrome(executable_path=r'C:\Users\Aditya Choudhary\Downloads\chromedriver_win32\chromedriver.exe')
+driver=webdriver.Chrome(executable_path=r'D:/Obfuscation/JEECutoffPredictor/chromedriver.exe')
 url='https://josaa.nic.in/Result/Result/OpeningClosingRankArchieve.aspx'
 
 class user:
