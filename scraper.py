@@ -1,40 +1,70 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import csv
+import time
+from bs4 import BeautifulSoup as bs
 from selenium.webdriver.common.by import By
-from selenium import webdriver
+
+
+import requests
+
+
+url =   "https://josaa.admissions.nic.in/applicant/seatmatrix/openingclosingrankarchieve.aspx"
 
 
 
-chrome_options = webdriver.ChromeOptions().add_experimental_option("detach",True)
-
-
-with webdriver.Chrome(options=chrome_options) as driver:
-    # Open URL
-    driver.get("https://seleniumhq.github.io")
-
-    # Setup wait for later
-    wait = WebDriverWait(driver, 10)
-
-    # Store the ID of the original window
-    original_window = driver.current_window_handle
-
-    # Check we don't have other windows open already
-    assert len(driver.window_handles) == 1
-
-    # Click the link which opens in a new window
-    driver.find_element(By.LINK_TEXT, "new window").click()
-
-    # Wait for the new window or tab
-    wait.until(EC.number_of_windows_to_be(2))
-
-    # Loop through until we find a new window handle
-    for window_handle in driver.window_handles:
-        if window_handle != original_window:
-            driver.switch_to.window(window_handle)
-            break
+class Data():
     
+    def __init__(self,insti,prgrm,quota,stype,gen,Or,Cr) -> None:
+        self.insti = insti
+        self.prgrm = prgrm
+        self.quota = quota
+        self.stype = stype
+        self.gender = gen
+        self.Or = Or
+        self.Cr = Cr
+driver = webdriver.Chrome()
 
-    # Wait for the new tab to finish loading content
-    wait.until(EC.title_is("SeleniumHQ Browser Automation"))
-    
+def Parsing(url):
+    driver.get(url=url)
+    years = elementFind('//a[@class="chosen-single"]','//li[@class="active-result"]')
+    time.sleep(1)
+    for year in years:
+        year.click()
+        # try:
+
+        #     year.click()
+        # except:
+        #     print("Unable to perform the action")
+        
+        # # if int(year.text)==type(int):
+        # rounds = elementFind('//a[@class="chosen-single"]','//li[@class="active-result"]')
+        # for rnd in rounds:
+        #     print(year.text,rnd.text)
+    # print(year.text)
+    # year[1].click()
+    # print(year[1].text)
+        
+def elementFind(locator:str,Locator2:str):
+    temp =driver.find_element(By.XPATH,locator)
+    # print(temp.text)
+    if temp.text == '--Select--':
+        temp.click()
+    # for x in temp:
+    #     if x.text =='--Select--' :
+    #         x.click()
+    try:
+        dropdown = driver.find_elements(By.XPATH,Locator2)
+        # for i in dropdown:
+        #     print(i.text)
+        return dropdown
+    except:
+        print("Some error occured")
+Parsing(url=url)
+
+
+
+
+# response = requests.get(url)
+
+# soup = bs(response.text,'html.parser')
+# print(soup)
